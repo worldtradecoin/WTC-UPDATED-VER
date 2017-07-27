@@ -1,0 +1,5 @@
+WtcCoin-qt usr/bin
+share/pixmaps/WtcCoin32.xpm usr/share/pixmaps
+share/pixmaps/WtcCoin80.xpm usr/share/pixmaps
+debian/WtcCoin-qt.desktop usr/share/applications
+debian/WtcCoin-qt.protocol usr/share/kde4/services/

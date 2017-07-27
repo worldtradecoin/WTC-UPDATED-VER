@@ -1,0 +1,11 @@
+[Unit]
+Description=WtcCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=WtcCoin
+ExecStart=/opt/WtcCoin/WtcCoind
+
+[Install]
+WantedBy=multi-user.target

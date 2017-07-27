@@ -1,0 +1,2 @@
+debian/bin/WtcCoind usr/bin
+src/WtcCoind usr/lib/WtcCoin

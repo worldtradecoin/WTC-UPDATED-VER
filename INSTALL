@@ -1,0 +1,9 @@
+Building WtcCoin
+
+See doc/readme-qt.rst for instructions on building WtcCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of WtcCoin.
+
+See doc/build-*.txt for instructions on building WtcCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of WtcCoin.

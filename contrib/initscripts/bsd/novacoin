@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: WtcCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# WtcCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable WtcCoin service.
+# WtcCoin_config (path): Set to /usr/local/etc/WtcCoin.conf by default.
+# WtcCoin_user:  The user account WtcCoin daemon runs as. It uses 'root' user by default.
+# WtcCoin_group: The group account WtcCoin daemon runs as. It uses 'wheel' group by default.
+# WtcCoin_datadir (str): Default to "/var/db/WtcCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=WtcCoin
+rcvar=WtcCoin_enable
+
+: ${WtcCoin_enable:=NO}
+: ${WtcCoin_config=/usr/local/etc/WtcCoin.conf}
+: ${WtcCoin_datadir=/var/db/WtcCoin}
+: ${WtcCoin_user="root"}
+: ${WtcCoin_group="wheel"}
+
+required_files=${WtcCoin_config}
+command=/usr/local/bin/WtcCoind
+WtcCoin_chdir=${WtcCoin_datadir}
+pidfile="${WtcCoin_datadir}/WtcCoind.pid"
+stop_cmd=WtcCoin_stop
+command_args="-conf=${WtcCoin_config} -datadir=${WtcCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+WtcCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${WtcCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${WtcCoin_user}:${WtcCoin_group} ${WtcCoin_datadir}
+}
+
+WtcCoin_prestart()
+{
+	if [ ! -d "${WtcCoin_datadir}/." ]; then
+		WtcCoin_create_datadir || return 1
+	fi
+}
+
+WtcCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+WtcCoin_stop()
+{
+    WtcCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${WtcCoin_config} -datadir=${WtcCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=WtcCoin
+Comment=WtcCoin P2P Cryptocurrency
+Comment[ru]=WtcCoin, P2P криптовалюта
+Comment[fr]=WtcCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=WtcCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/WtcCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/WtcCoin80.xpm
+MimeType=x-scheme-handler/WtcCoin;
+Categories=Office;
